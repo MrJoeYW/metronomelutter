@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:metronomelutter/global_data.dart';
@@ -11,7 +10,7 @@ void main() async {
   // 确保初始化,否则访问 SharedPreferences 会报错
   WidgetsFlutterBinding.ensureInitialized();
 
-  GlobalData.sp = await SpUtil.getInstance();
+  GlobalData.sp = (await SpUtil.getInstance())!;
   initSoundType();
   initBpm();
 
@@ -28,14 +27,14 @@ class MyApp extends StatelessWidget {
       // debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.light,
-        accentColor: Colors.blue,
         inputDecorationTheme: Theme.of(context).inputDecorationTheme.copyWith(
               fillColor: Colors.grey.shade50,
             ),
+        colorScheme: ColorScheme.fromSwatch(brightness: Brightness.light).copyWith(secondary: Colors.blue),
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
-        accentColor: Color.fromRGBO(134, 165, 255, 1),
+        colorScheme: ColorScheme.fromSwatch(brightness: Brightness.dark).copyWith(secondary: Color.fromRGBO(134, 165, 255, 1)),
       ),
       themeMode: ThemeMode.system,
       home: MyHomePage(),
@@ -46,17 +45,13 @@ class MyApp extends StatelessWidget {
 }
 
 initSoundType() {
-  int soundType = GlobalData.sp.getInt('soundType');
-  if (soundType != null) {
-    print('get sound type $soundType');
-    appStore.setSoundType(soundType);
-  }
+  int? soundType = GlobalData.sp.getInt('soundType');
+  print('get sound type $soundType');
+  if (soundType != null) appStore.setSoundType(soundType);
 }
 
 initBpm() {
-  int spRes = GlobalData.sp.getInt('bpm');
-  if (spRes != null) {
-    print('get bpm $spRes');
-    appStore.setBpm(spRes);
-  }
+  int? spRes = GlobalData.sp.getInt('bpm');
+  print('get bpm $spRes');
+  if (spRes != null) appStore.setBpm(spRes);
 }

@@ -1,57 +1,48 @@
-import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 class GameAudio {
-  List<AudioCache> audioCaches = [];
+  List<AudioPlayer> players = [];
 
-  List files;
+  List<String>? files;
   int maxPlayers;
 
   GameAudio(this.maxPlayers, {this.files});
 
   Future init() async {
     for (int i = 0; i < maxPlayers; i++) {
-      audioCaches.add(await _createNewAudioCache());
+      players.add(await _createNewPlayer());
     }
   }
 
-  Future play(String file, {volume = 1.0}) async {
-    for (int i = 0; i < maxPlayers; i++) {
-      if (audioCaches[i].fixedPlayer.state == AudioPlayerState.PLAYING) {
-        audioCaches[i].fixedPlayer.stop();
+  Future play(String file, {double volume = 1.0}) async {
+    if (players.isNotEmpty) {
+      if (players[0].state == PlayerState.playing) {
+        await players[0].stop();
       }
-      return audioCaches[i].play(file, volume: volume, mode: PlayerMode.LOW_LATENCY);
+      return players[0].play(AssetSource(file), volume: volume);
     }
   }
 
   Future stop() async {
     for (int i = 0; i < maxPlayers; i++) {
-      // if (audioCaches[i].fixedPlayer.state == AudioPlayerState.PLAYING) {
-      audioCaches[i].fixedPlayer.stop();
-      // }
+      await players[i].stop();
     }
   }
 
-  Future _createNewAudioCache() async {
-    final AudioCache audioCache = AudioCache(
-        // prefix: 'audio/',
-        fixedPlayer: AudioPlayer());
-    await audioCache.fixedPlayer.setReleaseMode(ReleaseMode.STOP);
-    // await audioCache.loadAll(files);
-    return audioCache;
+  Future<AudioPlayer> _createNewPlayer() async {
+    final player = AudioPlayer();
+    await player.setReleaseMode(ReleaseMode.stop);
+    return player;
   }
 
-  /// Clears all the audios in the cache
   void clearAll() {
-    audioCaches.forEach((audioCache) {
-      audioCache.clearCache();
+    players.forEach((player) {
+      player.dispose();
     });
   }
 
-  /// Disables audio related logs
   void disableLog() {
-    audioCaches.forEach((audioCache) {
-      audioCache.disableLog();
-    });
+    // Logging is controlled at Library level in newer audioplayers
   }
 }
+

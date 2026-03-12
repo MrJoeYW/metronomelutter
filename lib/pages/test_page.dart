@@ -29,5 +29,5 @@ class CustomGridView extends StatelessWidget {
         ),
       );
 
-  String colorString(Color color) => "#${color.value.toRadixString(16).padLeft(8, '0').toUpperCase()}";
+  String colorString(Color color) => "#${color.toARGB32().toRadixString(16).padLeft(8, '0').toUpperCase()}";
 }

@@ -25,6 +25,19 @@ abstract class _MetronomeStore with Store {
   @observable
   int note = Config.NOTE_DEFAULT;
 
+  @observable
+  int nowStep = -1;
+
+  @action
+  void nextStep() {
+    nowStep++;
+  }
+
+  @action
+  void resetStep() {
+    nowStep = -1;
+  }
+
   @action
   void setSoundType(payload) {
     soundType = payload;

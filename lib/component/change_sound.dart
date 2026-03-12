@@ -14,7 +14,7 @@ Future<int> changeSound(context) async {
     );
   }
 
-  int i = await showDialog<int>(
+  int? i = await showDialog<int?>(
       context: context,
       builder: (BuildContext context) {
         return SimpleDialog(
@@ -32,5 +32,5 @@ Future<int> changeSound(context) async {
           ],
         );
       });
-  return i;
+  return i ?? 0;
 }

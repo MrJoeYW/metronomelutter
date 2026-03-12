@@ -18,10 +18,8 @@ class Setting extends StatelessWidget {
               context,
               onTap: () async {
                 final res = await changeSound(context);
-                if (res != null) {
-                  appStore.setSoundType(res);
-                }
-              },
+                appStore.setSoundType(res);
+                            },
             ),
             // 节拍
             buildInkWellSettingItem(
@@ -61,7 +59,7 @@ class Setting extends StatelessWidget {
   buildInkWellSettingItem(
     String text,
     BuildContext context, {
-    final Function onTap,
+    final GestureTapCallback? onTap,
   }) {
     return InkWell(
       child: Container(
@@ -69,7 +67,7 @@ class Setting extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
         child: Text(
           text,
-          style: Theme.of(context).textTheme.button,
+          style: Theme.of(context).textTheme.labelLarge,
         ),
       ),
       onTap: onTap,

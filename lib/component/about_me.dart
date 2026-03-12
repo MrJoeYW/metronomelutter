@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 class AboutMe extends StatelessWidget {
   final String version;
   const AboutMe({
-    Key key,
+    Key? key,
     this.version = '0.0',
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final IconThemeData iconTheme = IconTheme.of(context);
-    final double iconSize = iconTheme.size;
+    final double iconSize = iconTheme.size ?? 24.0;
 
     return AboutDialog(
       applicationIcon: Image.asset(

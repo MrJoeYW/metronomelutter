@@ -10,8 +10,8 @@ import 'package:url_launcher/url_launcher.dart';
 // 警告框
 void $warn(
   String text, {
-  gravity: ToastGravity.CENTER,
-  toastLength: Toast.LENGTH_SHORT,
+  gravity = ToastGravity.CENTER,
+  toastLength = Toast.LENGTH_SHORT,
 }) {
   Fluttertoast.cancel();
 
@@ -30,12 +30,12 @@ void $warn(
 Future<void> $confirm(
   String text,
   BuildContext context, {
-  final Function btnOkOnPress,
-  final Function btnCancelOnPress,
+  final Function? btnOkOnPress,
+  final Function? btnCancelOnPress,
   title = '提示',
   confirmText = '确定',
   cancelText = '取消',
-  Widget customBody,
+  Widget? customBody,
 }) async {
   return showDialog<void>(
     context: context,
@@ -44,13 +44,7 @@ Future<void> $confirm(
       return AlertDialog(
         title: Text(title),
         content: SingleChildScrollView(
-          child: customBody != null
-              ? customBody
-              : ListBody(
-                  children: <Widget>[
-                    Text(text),
-                  ],
-                ),
+          child: customBody,
         ),
         actions: <Widget>[
           TextButton(
@@ -58,9 +52,7 @@ Future<void> $confirm(
             onPressed: () {
               Navigator.of(context).pop();
 
-              if (btnOkOnPress != null) {
-                btnOkOnPress();
-              }
+              if (btnOkOnPress != null) btnOkOnPress();
             },
           ),
           TextButton(
@@ -72,9 +64,7 @@ Future<void> $confirm(
             ),
             onPressed: () {
               Navigator.of(context).pop();
-              if (btnCancelOnPress != null) {
-                btnCancelOnPress();
-              }
+              if (btnCancelOnPress != null) btnCancelOnPress();
             },
           ),
         ],
@@ -86,7 +76,7 @@ Future<void> $confirm(
 // 复制到剪切板
 Future<String> copyToClipboard(
   String text, {
-  gravity: ToastGravity.CENTER,
+  gravity = ToastGravity.CENTER,
 }) async {
   //复制
   Clipboard.setData(ClipboardData(text: text));
@@ -95,8 +85,8 @@ Future<String> copyToClipboard(
   try {
     //读取剪切板
     var textFu = await Clipboard.getData(Clipboard.kTextPlain);
-    if (text == textFu.text) {
-      res = textFu.text;
+    if (textFu != null && text == textFu.text) {
+      res = textFu.text ?? '';
       // 个人中心的复制会真好的黑色的邀请重合,这里让弹窗放到上面去
       $warn('复制成功', gravity: gravity);
     } else {
@@ -113,7 +103,7 @@ Future<String> copyToClipboard(
 }
 
 // 自动超时关闭
-Timer _loadingClosedTimer;
+Timer? _loadingClosedTimer;
 
 $loading(context,
     {title = '加载中',
@@ -127,9 +117,7 @@ $loading(context,
   EasyLoading.show(status: title);
 
 //  超过预期时间仍未关闭 loading
-  if (_loadingClosedTimer != null) {
-    _loadingClosedTimer.cancel();
-  }
+  _loadingClosedTimer?.cancel();
   _loadingClosedTimer = new Timer(new Duration(seconds: closedTimeout), () {
     $loadingHide();
   });
@@ -150,8 +138,8 @@ findKeyByValue(Map map, dynamic val) {
 }
 
 launchURL(url) async {
-  if (await canLaunch(url)) {
-    return launch(url);
+  if (await canLaunchUrl(Uri.parse(url))) {
+    return launchUrl(Uri.parse(url));
   } else {
     throw '无法拉起: $url';
   }
