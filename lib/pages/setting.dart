@@ -3,7 +3,7 @@ import 'package:metronomelutter/component/about_me.dart';
 import 'package:metronomelutter/component/change_sound.dart';
 import 'package:metronomelutter/store/index.dart';
 import 'package:metronomelutter/utils/global_function.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class Setting extends StatelessWidget {
   @override

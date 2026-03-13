@@ -10,7 +10,7 @@ import 'package:metronomelutter/component/game_audio.dart';
 import 'package:metronomelutter/config/config.dart';
 import 'package:metronomelutter/store/index.dart';
 import 'package:quick_actions/quick_actions.dart';
-import 'package:wakelock/wakelock.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 import './setting.dart';
 import '../component/indactor.dart';
@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage>
     // 设定桌面图标长按 END
 
     if (!kIsWeb) {
-      Wakelock.enable();
+      WakelockPlus.enable();
     }
 
     _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 300));

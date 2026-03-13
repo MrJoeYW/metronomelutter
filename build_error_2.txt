@@ -1,0 +1,39 @@
+Running Gradle task 'assembleDebug'...                          
+
+FAILURE: Build failed with an exception.
+
+* Where:
+Settings file 'C:\Users\uviJ\Desktop\metronomelutter\android\settings.gradle' line: 3
+
+* What went wrong:
+Could not compile settings file 'C:\Users\uviJ\Desktop\metronomelutter\android\settings.gradle'.
+> startup failed:
+  settings file 'C:\Users\uviJ\Desktop\metronomelutter\android\settings.gradle': 3: The pluginManagement {} block must appear before any other statements in the script.
+
+  See https://docs.gradle.org/7.5/userguide/plugins.html#sec:plugin_management for information on the pluginManagement {} block
+
+   @ line 3, column 1.
+     pluginManagement {
+     ^
+
+  settings file 'C:\Users\uviJ\Desktop\metronomelutter\android\settings.gradle': 21: only buildscript {}, pluginManagement {} and other plugins {} script blocks are allowed before plugins {} blocks, no other statements are allowed
+
+  See https://docs.gradle.org/7.5/userguide/plugins.html#sec:plugins_block for information on the plugins {} block
+
+   @ line 21, column 1.
+     plugins {
+     ^
+
+  2 errors
+
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+
+* Get more help at https://help.gradle.org
+
+BUILD FAILED in 613ms
+Running Gradle task 'assembleDebug'...                           1,311ms
+Gradle task assembleDebug failed with exit code 1
